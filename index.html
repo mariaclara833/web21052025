@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de tempo</title>
+    <link rel="stylesheet" href="css.css">
+ </head>
+<body>
+    <h1>Agora sao exatmente:</h1>
+    <h2 id="relogio"></h2>
+<script>
+function atualizarRelogio(){
+const agora = new Date();const horas  = agora.getHours().toString().padStart(2, '0'); //1:5:30 01:05:30
+const minutos = agora.getMinutes().toString().padStart(2, '0');
+const segundos = agora.getSeconds().toString().padStart(2, '0');
+
+document.getElementById("relogio").innerText =  `${horas}:${minutos}:${segundos}`; 
+
+
+}
+setInterval(atualizarRelogio, 1000);
+atualizarRelogio();
+</script>;
+
+<hr>: 
+<h2 id = "cronometro">00:00:00</h2>
+<div>
+<button onclick="iniciar()" id="btIniciar">Iniciar</button>
+<button onclick="pausar()" id="btPausar">Pausar</button>
+<button onclick="zerar()" id="btZerar">Zerar</button>
+</div>
+ 
+<script> 
+let segundos = 0;
+let intervalo;
+
+function formatarTime(segundos){
+const h = String(Math.floor(segundos/3600)).padStart(2, '0');
+const m = String(Math.floor((segundos % 3600)/60)).padStart(2, '0');
+const s = String(segundos % 60).padStart(2,'0');
+return `${h}:${m}:${s}`;
+
+
+
+}
+
+function atualizarCronometro(){
+    document.getElementById("cronometro").innerText = formatarTime(segundos);
+
+
+
+
+
+}
+ function iniciar(){
+if(!intervalo){
+intervalo = setInterval(() => {
+segundos++;
+atualizarCronometro();
+
+      }, 1000);
+
+    }
+
+  }//https://github.com/edvaldor/arquivos_js_4
+  function pausar(){
+    if(intervalo){
+clearInterval(intervalo);
+intervalo = null;
+  }
+
+  }
+  function zerar(){
+pausar();
+segundos = 0;
+atualizarCronometro(); 
+  }
+ 
+
+
+
+
+</script>
+
+</body>
+</html>
